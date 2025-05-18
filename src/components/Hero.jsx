@@ -9,6 +9,8 @@ import { ImCancelCircle } from "react-icons/im";
 
 const Hero = () => {
 
+    
+    // Sample data for packing items
     const [items, setItems] = useState([
         { id: "1", name: "Passport", category: "Essentials", packed: false },
         { id: "2", name: "Phone charger", category: "Essentials", packed: false },
@@ -26,7 +28,7 @@ const Hero = () => {
         { id: "14", name: "Sunglasses", category: "Accessories", packed: false },
         { id: "15", name: "Umbrella", category: "Misc.", packed: true },
     ])
-
+    // State to manage selected category
     const [selectedCategory, setSelectedCategory] = useState("Essentials");
     const categoryList = ["Essentials", "Clothing", "Toiletries", "Food", "Electronics", "Accessories", "Misc."];
 
@@ -35,6 +37,7 @@ const Hero = () => {
         return categoryItems.length > 0 && categoryItems.every(item => item.packed);
     };
 
+    // Effect to show a toast when all items in a category are packed
     useEffect(() => {
         const categoryItems = items.filter(item => item.category === selectedCategory);
         if (
@@ -48,6 +51,7 @@ const Hero = () => {
 
     const [addItem, setAddItem] = useState(false);
 
+    // Function to handle adding a new item
     const handleInsert = () => {
         setAddItem(!addItem);
         const itemName = document.querySelector('input[type="text"]').value;
@@ -56,6 +60,7 @@ const Hero = () => {
         }
     }
 
+    // Function to handle theme change
     const changeTheme = () =>{
         const body = document.documentElement;
         body.classList.add('light');
@@ -72,6 +77,7 @@ const Hero = () => {
 
         <h1 className='font-bold text-black/30 text-5xl m-5 text-center'>My Packing Checklist</h1>
 
+        {/* Caregory Bar */}
         <div className='w-[80dvw] p-2 flex flex-wrap justify-around rounded-2xl sm:bg-white/30 sm:shadow-lg my-5'>
             {categoryList.map(category => (
                 <button key={category} onClick={() => setSelectedCategory(category)} className={selectedCategory == category ? "font-bold rounded-xl hover:bg-red-400 duration-300 p-1 bg-red-400 w-30" : "font-bold rounded-xl hover:bg-red-400 duration-300 p-1 w-30"}>{category}
@@ -80,6 +86,7 @@ const Hero = () => {
             ))}
         </div>
 
+        {/* Packing List Note */}
         <div className='w-[70vw] h-[35vh] sm:w-[20vw] sm:h-[40vh] p-4 m-4 rotate-6 flex items-center justify-center flex-col' style={{ background: `url(${note})`, backgroundSize: 'cover', backgroundPosition: 'center' }}>
             <h1 className='font-bold text-2xl absolute top-7'>{selectedCategory}</h1>
             <button onClick={handleInsert} title='Add New Item' className="font-bold text-2xl absolute top-8 right-10 hover:scale-130 duration-200">
@@ -112,6 +119,7 @@ const Hero = () => {
             </ul>
         </div>
 
+        {/* Modal to add new items */}
         {addItem && (
             
             <div className="absolute top-0 left-0 w-screen h-screen bg-black/80 place-items-center justify-center flex flex-col">
