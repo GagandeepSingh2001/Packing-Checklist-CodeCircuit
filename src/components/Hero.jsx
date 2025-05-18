@@ -114,13 +114,18 @@ const Hero = () => {
 
         {addItem && (
             
-            <div className="absolute top-0 left-0 w-screen h-screen bg-black/80 grid place-items-center">
-            <span><input
+            <div className="absolute top-0 left-0 w-screen h-screen bg-black/80 place-items-center justify-center flex flex-col">
+                <input
                 type="text"
                 placeholder="Type here to add new item to the list"
                 className="border border-gray-300 rounded-full p-2 bg-black/20 w-[30vw] text-white/80 text-center focus:outline-none focus:ring-2 focus:ring-red-400"
                 onKeyDown={(e) => {
                     if (e.key === "Enter" && e.target.value.trim() !== "") {
+                        const categoryItems = items.filter(item => item.category === selectedCategory);
+                            if (categoryItems.length >= 5) {
+                            toast.error(`Maximul limit of 5 items reached in '${selectedCategory}'`);
+                            return;
+                        }
                         const newItem = {
                             id: Date.now().toString(),
                             name: e.target.value,
@@ -135,7 +140,7 @@ const Hero = () => {
                     }
                 }}>
             </input>
-            <h2 className='text-white m-3 text-center uppercase overflow-ellipsis'>press "enter" to insert the item to your checklist</h2></span>
+            <h2 className='text-white m-3 text-center uppercase overflow-ellipsis'>press "enter" to insert the item to your checklist</h2>
 
             <button className="absolute top-10 right-10 text-3xl text-red-300 hover:text-red-500 duration-300" onClick={() => {setAddItem(false);}}>
                 <ImCancelCircle />
