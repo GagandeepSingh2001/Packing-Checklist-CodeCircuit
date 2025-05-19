@@ -70,9 +70,9 @@ const Hero = () => {
 
 
   return (
-    <div className='overflow-hidden relative h-screen'>
+    <div className='overflow-hidden relative h-[100dvh]'>
     <div className='grid place-items-center'>
-        <Fade direction='left' className='absolute top-5 left-1 sm:left-10 duration-100 rounded-full p-1 w-[10vw] sm:w-[4vw] active:scale-80'>
+        <Fade direction='left' className='absolute top-5 left-1 sm:left-10 duration-100 rounded-full p-1 w-[10vw] sm:w-[4vw] active:scale-80 z-50'>
         <button title='Change Theme' onClick={changeTheme}>
             <img src='https://cdn-icons-png.freepik.com/256/12254/12254205.png?semt=ais_hybrid'></img>
         </button>
