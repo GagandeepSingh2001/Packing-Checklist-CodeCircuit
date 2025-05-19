@@ -5,6 +5,7 @@ import bottom from '../assets/bottom.png';
 import { RiDeleteBin5Fill } from "react-icons/ri";
 import { IoAddCircleOutline } from "react-icons/io5";
 import { ImCancelCircle } from "react-icons/im";
+import { Zoom, Fade } from "react-awesome-reveal";
 
 
 const Hero = () => {
@@ -69,20 +70,29 @@ const Hero = () => {
 
 
   return (
-    <div className='grid place-items-center overflow-clip'>
-        <button className="absolute top-5 left-1 sm:left-10 duration-100 rounded-full p-1 w-[10vw] sm:w-[4vw] active:scale-80" title='Change Theme' onClick={changeTheme}>
+    <div className='overflow-hidden relative h-screen'>
+    <div className='grid place-items-center'>
+        <Fade direction='left' className='absolute top-5 left-1 sm:left-10 duration-100 rounded-full p-1 w-[10vw] sm:w-[4vw] active:scale-80'>
+        <button title='Change Theme' onClick={changeTheme}>
             <img src='https://cdn-icons-png.freepik.com/256/12254/12254205.png?semt=ais_hybrid'></img>
         </button>
-        <img src={bottom} alt="bottom" className='absolute bottom-0 -z-1 w-screen h-[70vh] object-cover' />
-
-        <h1 className='font-bold text-black/30 text-5xl m-5 text-center'>My Packing Checklist</h1>
+        </Fade>
+        <Fade direction='up' className='absolute bottom-0 w-screen h-[70vh] overflow-hidden'>
+        <img src={bottom} alt="bottom" className='-z-1 object-cover w-full h-full' />
+        </Fade>
+        
+        <Zoom>
+            <h1 className='font-bold text-black/30 text-5xl m-5 text-center'>My Packing Checklist</h1>
+        </Zoom>
 
         {/* Caregory Bar */}
         <div className='w-[80dvw] p-2 flex flex-wrap justify-around rounded-2xl sm:bg-white/30 sm:shadow-lg my-5'>
             {categoryList.map(category => (
+                <Fade duration={2000} key={category}>
                 <button key={category} onClick={() => setSelectedCategory(category)} className={selectedCategory == category ? "font-bold rounded-xl hover:bg-red-400 duration-300 p-1 bg-red-400 w-30" : "font-bold rounded-xl hover:bg-red-400 duration-300 p-1 w-30"}>{category}
                 {allChecked(category) && <span className=''> ✔</span>}
                 </button>
+                </Fade>
             ))}
         </div>
 
@@ -93,7 +103,8 @@ const Hero = () => {
                 <IoAddCircleOutline />
             </button>
             <ul className='relative'>
-            {items.filter(item => item.category == selectedCategory).map(item =>
+            {items.filter(item => item.category == selectedCategory).map((item, index) =>
+                <Fade key={item.id} duration={500} direction='left' delay={index * 200}>
                 <li key={item.id}>
                     <input
                         type="checkbox"
@@ -114,6 +125,7 @@ const Hero = () => {
                         }} > <RiDeleteBin5Fill />
                     </button>
                 </li>
+                </Fade>
             
             )}
             </ul>
@@ -131,7 +143,7 @@ const Hero = () => {
                     if (e.key === "Enter" && e.target.value.trim() !== "") {
                         const categoryItems = items.filter(item => item.category === selectedCategory);
                             if (categoryItems.length >= 5) {
-                            toast.error(`Maximul limit of 5 items reached in '${selectedCategory}'`);
+                            toast.error(`Maximum limit of 5 items reached in '${selectedCategory}'`);
                             return;
                         }
                         const newItem = {
@@ -156,6 +168,7 @@ const Hero = () => {
 
             </div>
         )}
+    </div>
     </div>
   )
 }
